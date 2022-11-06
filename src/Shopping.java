@@ -1,3 +1,6 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.Scanner;
 
 public class Shopping {
@@ -18,6 +21,31 @@ public class Shopping {
             switch (choice){
                 case 1:
                     System.out.println("Insert");
+                    System.out.println("Enter the nme ");
+                    String name = sc.next();
+                    System.out.println("Enter the description ");
+                    String desname = sc.next();
+                    System.out.println("Enter the manufacture date");
+                    String date = sc.next();
+                    System.out.println("Enter the brand name");
+                    String brandName = sc.next();
+                    System.out.println("Enter the price");
+                    int price = sc.nextInt();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/shoppingdb","root","");
+                        String sql = "INSERT INTO `products`(`productname`, `description`, `mfd`, `brandname`, `price`) VALUES(?,?,?,?,?)";
+                        PreparedStatement stmt = con.prepareStatement(sql);
+                        stmt.setString(1,name);
+                        stmt.setString(2,desname);
+                        stmt.setString(3,date);
+                        stmt.setString(4,brandName);
+                        stmt.setInt(5,price);
+                        stmt.executeUpdate();
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 2:
                     System.out.println("View");
