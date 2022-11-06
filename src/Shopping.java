@@ -101,6 +101,28 @@ public class Shopping {
                     break;
                 case 4:
                     System.out.println("Update");
+                    System.out.println("Enter the id");
+                    id = sc.nextInt();
+                    System.out.println("Enter the nme ");
+                    name = sc.next();
+                    System.out.println("Enter the description ");
+                    desname = sc.next();
+                    System.out.println("Enter the manufacture date");
+                    date = sc.next();
+                    System.out.println("Enter the brand name");
+                    brandName = sc.next();
+                    System.out.println("Enter the price");
+                    price = sc.nextInt();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/shoppingdb","root","");
+                        String sql = "UPDATE `products` SET `productname`='"+name+"',`description`='"+desname+"',`mfd`='"+date+"',`brandname`='"+brandName+"',`price`='"+price+"' WHERE `id`="+id;
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 5:
                     System.out.println("Delete");
