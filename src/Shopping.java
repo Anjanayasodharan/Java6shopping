@@ -73,6 +73,31 @@ public class Shopping {
                     break;
                 case 3:
                     System.out.println("Search");
+                    System.out.println("Enter the id");
+                    int id = sc.nextInt();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/shoppingdb","root","");
+                        String sql = "SELECT `id`, `productname`, `description`, `mfd`, `brandname`, `price` FROM `products` WHERE `id`="+id;
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()){
+                            name = rs.getString("productname");
+                            String Desc = rs.getString("description");
+                            String Manu_date = rs.getString("mfd");
+                            String BrandName = rs.getString("brandname");
+                            price = rs.getInt("price");
+                            System.out.println("productname ="+name);
+                            System.out.println("description ="+Desc);
+                            System.out.println("mfd ="+Manu_date);
+                            System.out.println("brandname ="+BrandName);
+                            System.out.println("price ="+price+'\n');
+                        }
+
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 4:
                     System.out.println("Update");
