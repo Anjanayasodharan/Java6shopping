@@ -12,7 +12,8 @@ public class Shopping {
             System.out.println("3 :Search");
             System.out.println("4 :Update");
             System.out.println("5 :Delete");
-            System.out.println("6 :exit");
+            System.out.println("6 :No of products manufactured");
+            System.out.println("8 :exit");
 
             choice = sc.nextInt();
 
@@ -140,6 +141,26 @@ public class Shopping {
                     }
                     break;
                 case 6:
+                    System.out.println("Number of products manufactured");
+                    String date1 = sc.next();
+                    String date2 = sc.next();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/shoppingdb","root","");
+                        String sql = "SELECT COUNT(`productname`) AS count FROM `products` WHERE `mfd` BETWEEN '"+date1+"' AND '"+date2+"'";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()){
+                            int counts = rs.getInt("count");
+                            System.out.println("Number of product Manufactured ="+counts+'\n');
+
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
+                    break;
+                case 7:
                     System.exit(0);
             }
         }
