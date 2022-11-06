@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.Scanner;
 
 public class Shopping {
@@ -49,6 +47,29 @@ public class Shopping {
                     break;
                 case 2:
                     System.out.println("View");
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/shoppingdb","root","");
+                        String sql = "SELECT `productname`, `description`, `mfd`, `brandname`, `price` FROM `products`";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()){
+                            name = rs.getString("productname");
+                            String Desc = rs.getString("description");
+                            String Manu_date = rs.getString("mfd");
+                            String BrandName = rs.getString("brandname");
+                            price = rs.getInt("price");
+                            System.out.println("productname ="+name);
+                            System.out.println("description ="+Desc);
+                            System.out.println("mfd ="+Manu_date);
+                            System.out.println("brandname ="+BrandName);
+                            System.out.println("price ="+price+'\n');
+                        }
+
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 3:
                     System.out.println("Search");
