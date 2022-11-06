@@ -13,6 +13,7 @@ public class Shopping {
             System.out.println("4 :Update");
             System.out.println("5 :Delete");
             System.out.println("6 :No of products manufactured");
+            System.out.println("7 :Product starting from s");
             System.out.println("8 :exit");
 
             choice = sc.nextInt();
@@ -161,6 +162,33 @@ public class Shopping {
                     }
                     break;
                 case 7:
+                    System.out.println("Name of the product starting letter");
+                    System.out.println("Enter the letter");
+                    String s = sc.next();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/shoppingdb","root","");
+                        String sql = "SELECT `productname`, `description`, `mfd`, `brandname`, `price` FROM `products` WHERE `productname` LIKE '"+s+"%'";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while(rs.next()){
+                            name = rs.getString("productname");
+                            String Desc = rs.getString("description");
+                            String Manu_date = rs.getString("mfd");
+                            String BrandName = rs.getString("brandname");
+                            price = rs.getInt("price");
+                            System.out.println("productname ="+name);
+                            System.out.println("description ="+Desc);
+                            System.out.println("mfd ="+Manu_date);
+                            System.out.println("brandname ="+BrandName);
+                            System.out.println("price ="+price+'\n');
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
+                    break;
+                case 8:
                     System.exit(0);
             }
         }
